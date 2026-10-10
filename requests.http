@@ -1,0 +1,55 @@
+@base = http://localhost:8082/api
+
+### Listar facultades
+GET {{base}}/facultades
+
+### Crear facultad
+POST {{base}}/facultades
+Content-Type: application/json
+
+{"nombre": "Derecho"}
+
+### Buscar por ID (no existe -> 404)
+GET {{base}}/estudiantes/999
+
+### Crear estudiante (válido)
+POST {{base}}/estudiantes
+Content-Type: application/json
+
+{"codigo": "20240003", "nombre": "Marta Cruz", "email": "marta@correo.edu", "facultadId": 1}
+
+### Crear estudiante (inválido -> 400 con detalle por campo)
+POST {{base}}/estudiantes
+Content-Type: application/json
+
+{"codigo": "", "nombre": "", "email": "no-es-correo", "facultadId": null}
+
+### Crear matrícula duplicada (-> 400)
+POST {{base}}/matriculas
+Content-Type: application/json
+
+{"estudianteId": 1, "asignaturaId": 1, "periodo": "2026-1"}
+
+### Actualizar asignatura
+PUT {{base}}/asignaturas/1
+Content-Type: application/json
+
+{"codigo": "IS101", "nombre": "Programación I (rev.)", "creditos": 4, "facultadId": 1}
+
+### Retirar matrícula
+PUT {{base}}/matriculas/2
+Content-Type: application/json
+
+{"estudianteId": 1, "asignaturaId": 2, "periodo": "2026-1", "estado": "RETIRADA"}
+
+### Pago sobre matrícula retirada (-> 400)
+POST {{base}}/pagos
+Content-Type: application/json
+
+{"matriculaId": 2, "monto": 100.00, "concepto": "Prueba"}
+
+### Eliminar pago
+DELETE {{base}}/pagos/2
+
+### PDF de listas
+GET {{base}}/reportes/estudiantes/pdf

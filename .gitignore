@@ -1,0 +1,7 @@
+target/
+*.zip
+.env
+application-secrets.properties
+*.log
+.idea/
+.vscode/
